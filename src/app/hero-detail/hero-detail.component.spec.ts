@@ -5,6 +5,7 @@ import { HeroService } from '../hero.service';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { doesNotThrow } from 'assert';
 
 describe('HeroDetailComponent', () => {
   let fixture: ComponentFixture<HeroDetailComponent>;
@@ -35,6 +36,18 @@ describe('HeroDetailComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('h2').textContent).toContain('SUPERDUDE');
+  });
+
+  it('should call updateHero when save is called', (done) => {
+    mockHeroService.updateHero.and.returnValue(of({}));
+    fixture.detectChanges();
+
+    fixture.componentInstance.save();
+
+    setTimeout(() => {
+      expect(mockHeroService.updateHero).toHaveBeenCalled();
+      done();
+    }, 300);
   });
 
 });
