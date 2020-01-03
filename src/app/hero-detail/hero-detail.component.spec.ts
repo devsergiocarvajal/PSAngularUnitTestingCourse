@@ -1,11 +1,10 @@
-import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, flush } from '@angular/core/testing';
 import { HeroDetailComponent } from './hero-detail.component';
 import { ActivatedRoute } from '@angular/router';
 import { HeroService } from '../hero.service';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { tick } from '@angular/core/testing';
 
 describe('HeroDetailComponent', () => {
   let fixture: ComponentFixture<HeroDetailComponent>;
@@ -43,7 +42,7 @@ describe('HeroDetailComponent', () => {
     fixture.detectChanges();
 
     fixture.componentInstance.save();
-    tick(250);
+    flush();
 
     expect(mockHeroService.updateHero).toHaveBeenCalled();
   }));
